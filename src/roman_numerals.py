@@ -10,7 +10,7 @@ def replace(old: str, new: str) -> Callable[[str], str]:
 
 
 def roman_numerals(number: int) -> str:
-    return pipe(  # type: ignore
+    return pipe(
         "I" * number,
         replace("IIIII", "V"),
         replace("VV", "X"),

@@ -8,7 +8,7 @@ def think_of_a_number(number: int) -> float:
     def divide_by_the_number(x: int) -> float: return x / number
     def subtract_the_number(x: float) -> float: return x - number
 
-    return pipe(  # type: ignore
+    return pipe(
         number,
         add_one,
         square_it,
