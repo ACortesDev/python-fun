@@ -24,7 +24,7 @@ Playing with Python and ***Functional Programming (FP)*** concepts after watchin
   - Implementation: [`src/roman_numerals.py`](src/roman_numerals.py)
   - Tests: [`tests/test_roman_numerals.py`](tests/test_roman_numerals.py)
 
-- (WIP) The *"don't do this in an interview"* ***FizzBuzz*** solution:
+- The *"Don't do this in an interview"* ***FizzBuzz*** solution:
   - Implementation: [`src/fizzbuzz.py`](src/fizzbuzz.py)
   - Tests: [`tests/test_fizzbuzz.py`](tests/test_fizzbuzz.py)
 
@@ -36,7 +36,7 @@ To type check the code:
 docker-compose run python-fun mypy /code --pretty --config-file=pyproject.toml
 ```
 
-To run the unit tests:
+To run the tests:
 
 ```sh
 docker-compose run python-fun pytest /code/tests -vv -s
@@ -45,3 +45,5 @@ docker-compose run python-fun pytest /code/tests -vv -s
 ## Notes
 
 To type check the code, I configured [mypy](https://mypy.readthedocs.io/en/latest/index.html) following [this article](https://blog.wolt.com/engineering/2021/09/30/professional-grade-mypy-configuration/).
+
+I decided to turn-off the **mypy** rule called **warn_return_any** to avoid using the `# type: ignore` comment when using the [pipe](src/pipe.py) function.
