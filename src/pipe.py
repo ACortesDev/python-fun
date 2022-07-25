@@ -6,23 +6,25 @@ from src.compose import compose
 
 
 class CompositionError(Exception):
-    pass
+    def __init__(self, f: Callable, g: Callable) -> None:
+        super().__init__(f"{f} and {g} cannot be composed")
 
 
 def can_be_composed(f: Callable, g: Callable) -> None:
-    f_anns = get_annotations(f)
-    g_anns = get_annotations(g)
-    g_arg_type = next(iter(g_anns.values()))
-    if f_anns["return"] != g_arg_type:
-        raise CompositionError(
-            f"Function {f} and function {g} cannot be composed"
-        )
+    f_annotations = get_annotations(f)
+    g_annotations = get_annotations(g)
+    if 2 == len(f_annotations) != len(g_annotations):
+        raise CompositionError(f, g)
+
+    _ = g_annotations.pop("return")
+    _, g_input_type = g_annotations.popitem()
+    f_output_type = f_annotations.pop("return")
+    if f_output_type != g_input_type:
+        raise CompositionError(f, g)
 
 
 def pipe(value: Any, *functions: Callable) -> Any:
     """Type-safe at runtime"""
-    def safe_runtime_compose(f: Callable, g: Callable) -> Callable:
-        can_be_composed(f, g)
-        return compose(f, g)
-
-    return reduce(safe_runtime_compose, functions)(value)
+    for i in range(1, len(functions)):
+        can_be_composed(functions[i-1], functions[i])
+    return reduce(compose, functions)(value)
